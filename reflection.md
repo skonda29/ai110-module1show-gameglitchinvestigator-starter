@@ -8,7 +8,10 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - List at least two concrete bugs you noticed at the start  
   (for example: "the secret number kept changing" or "the hints were backwards").
 
----
+1. the game looked a bit buggy because when I guessed 99, it asked me to go higher. but when I guessed 100, it asked me to go lower. The logic is messed up.
+2. a. The secret kept changing with every run 
+b. Show hint didn't work, it didn't show the hint at all
+3. The input is also taking values >100
 
 ## 2. How did you use AI as a teammate?
 
@@ -16,7 +19,31 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
 
----
+--- 1. I am using claude through VS code extension.
+2. What AI suggested
+if 'secret' not in st.session_state:
+    st.session_state.secret = random.randint(1, 100)
+if 'score' not in st.session_state:
+    st.session_state.score = 0
+if 'attempts' not in st.session_state:
+    st.session_state.attempts = 0
+if 'status' not in st.session_state:
+    st.session_state.status = "playing"
+
+Why It Works
+Session state survives reruns within the same user session. Every time a button clicks or widget changes, Streamlit reruns your script, but st.session_state values persist.
+
+Re-ran the code and tried multiple inputs to check and validate this
+
+3. def check_guess(guess, secret):
+    if guess == secret:
+        return "Win", "Correct!"
+    elif guess < secret:
+        return "Loss", "Higher" 
+    else:
+        return "Loss", "Lower" 
+
+  AI didnt check the type of the parameter "secret". I had to debug and compare with int(secret) for the logic to work.
 
 ## 3. Debugging and testing your fixes
 
@@ -26,6 +53,10 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - Did AI help you design or understand any tests? How?
 
 ---
+1. Tried multiple inputs and even inputs > 100 value.
+2. When I entered 110 to check if it is taking values greater than 100 or not, I realized the code didnt handle inputs > 100.
+3. AI helped me debug the import error in the test file by suggesting the correct sys.path.insert() approach to locate the logic_utils module. It also explained how pytest collects and runs tests, which clarified why the tests weren't being found initially.
+
 
 ## 4. What did you learn about Streamlit and state?
 
@@ -33,7 +64,6 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
 - What change did you make that finally gave the game a stable secret number?
 
----
 
 ## 5. Looking ahead: your developer habits
 
@@ -41,3 +71,4 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+

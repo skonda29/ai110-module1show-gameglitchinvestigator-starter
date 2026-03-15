@@ -30,21 +30,26 @@ def parse_guess(raw: str):
 
 
 def check_guess(guess, secret):
-    if guess == secret:
+    if guess == int(secret):
         return "Win", "🎉 Correct!"
 
-    try:
-        if guess > secret:
-            return "Too High", "📈 Go HIGHER!"
-        else:
-            return "Too Low", "📉 Go LOWER!"
-    except TypeError:
-        g = str(guess)
-        if g == secret:
-            return "Win", "🎉 Correct!"
-        if g > secret:
-            return "Too High", "📈 Go HIGHER!"
-        return "Too Low", "📉 Go LOWER!"
+    elif guess > int(secret):
+        return "Too High", "📉 Go LOWER!"
+    
+    else:        return "Too Low", "📈 Go HIGHER!"
+
+    # try:
+    #     if guess > secret:
+    #         return "Too High", "📈 Go HIGHER!"
+    #     else:
+    #         return "Too Low", "📉 Go LOWER!"
+    # except TypeError:
+    #     g = str(guess)
+    #     if g == secret:
+    #         return "Win", "🎉 Correct!"
+    #     if g > secret:
+    #         return "Too High", "📈 Go HIGHER!"
+    #     return "Too Low", "📉 Go LOWER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
@@ -63,6 +68,8 @@ def update_score(current_score: int, outcome: str, attempt_number: int):
         return current_score - 5
 
     return current_score
+
+
 
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
 
@@ -89,16 +96,13 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
-if "secret" not in st.session_state:
-    st.session_state.secret = random.randint(low, high)
-
-if "attempts" not in st.session_state:
-    st.session_state.attempts = 1
-
-if "score" not in st.session_state:
+if 'secret' not in st.session_state:
+    st.session_state.secret = random.randint(1, 100)
+if 'score' not in st.session_state:
     st.session_state.score = 0
-
-if "status" not in st.session_state:
+if 'attempts' not in st.session_state:
+    st.session_state.attempts = 0
+if 'status' not in st.session_state:
     st.session_state.status = "playing"
 
 if "history" not in st.session_state:
