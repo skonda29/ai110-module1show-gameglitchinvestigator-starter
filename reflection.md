@@ -71,4 +71,3 @@ Re-ran the code and tried multiple inputs to check and validate this
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
-
