@@ -28,7 +28,7 @@ def parse_guess(raw: str):
 
     return True, value, None
 
-
+#FIX: Refactored logic into logic_utils.py using Copilot Agent mode
 def check_guess(guess, secret):
     if guess == int(secret):
         return "Win", "🎉 Correct!"
